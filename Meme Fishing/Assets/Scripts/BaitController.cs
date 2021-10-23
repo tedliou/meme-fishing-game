@@ -17,7 +17,7 @@ public class BaitController : MonoBehaviour
             lifeTime -= Time.deltaTime;
             if (lifeTime <= 0)
             {
-                Destroy(gameObject);
+
             }
         }
     }

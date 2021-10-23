@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UpgradesManager : MonoBehaviour
+public class UpgradeManager : MonoBehaviour
 {
     public ItemData[] fishingRods;
     public PlayerStats playerStats;

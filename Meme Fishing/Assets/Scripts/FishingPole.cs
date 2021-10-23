@@ -10,7 +10,6 @@ public class FishingPole : MonoBehaviour
     public Transform bait;
     public LineRenderer lr;
     public Image collectionTimer;
-    public GameObject validityZoneIndicator;
 
     public PlayerStats playerStats;
 
@@ -28,7 +27,6 @@ public class FishingPole : MonoBehaviour
         cam.transform.position = new Vector3(0, 0, -10);
         cam.orthographicSize = 8;
         collectionTimer.fillAmount = 0;
-        validityZoneIndicator.SetActive(false);
 
         ResetThrowingState();
     }
@@ -63,12 +61,9 @@ public class FishingPole : MonoBehaviour
 
     private void ResetThrowingState()
     {
-        SwitchBait(playerStats.selectedBait);
-
-        bait.transform.localPosition = Vector3.zero;
+        bait.transform.localPosition = _poleTip.position;
         _baitRB.velocity = Vector2.zero;
         fishingPole.transform.DORotate(new Vector3(0, 0, 75), 0.2f);
-        validityZoneIndicator.SetActive(false);
     }
 
     public void StartPullingBait()
@@ -87,13 +82,12 @@ public class FishingPole : MonoBehaviour
     public void EndPullingBait()
     {
         float power = GetLinePulledDistance / playerStats.lineLength * playerStats.stanleyPower;
-        _baitRB.AddForce(-PoleToMouseDir * power, ForceMode2D.Impulse);
-        fishingPole.transform.DORotate(new Vector3(0, 0, -45), 0.75f).SetEase(Ease.InFlash);
-        StartCoroutine(Delay(0.5f, () => _baitRB.AddForce(-PoleToMouseDir * power, ForceMode2D.Impulse)));
+        _baitRB.AddForce(-PoleToBaitDir * power, ForceMode2D.Impulse);
+        fishingPole.transform.DORotate(new Vector3(0, 0, -45), 0.6f).SetEase(Ease.InFlash);
+        StartCoroutine(Delay(0.5f, () => _baitRB.AddForce(-PoleToBaitDir * power, ForceMode2D.Impulse)));
 
         GameManager.instance.state = State.Standby;
         StartCoroutine(Delay(2f, () => GameManager.instance.state = State.Fishing));
-        validityZoneIndicator.SetActive(false);
 
         collectionTimer.fillAmount = 0;
 
@@ -102,18 +96,19 @@ public class FishingPole : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) { EndFishingState(); }
+        if (Input.GetKeyDown(KeyCode.Space)) { ResetThrowingState(); }
 
         if (GameManager.instance.state == State.Throwing)
         {
             if (_poleTip == null || _baitRB == null) { return; }
 
-            if (GetMousePos.x > -5f)
-            {
-                ResetThrowingState();
-                validityZoneIndicator.SetActive(true);
-            }
-            else { validityZoneIndicator.SetActive(false); }
+            //if (GetMousePos.x > -5f)
+            //{
+            //    ResetThrowingState();
+            //    validityZoneIndicator.SetActive(true);
+            //    return;
+            //}
+            //else { validityZoneIndicator.SetActive(false); }
 
             if (Input.GetMouseButtonDown(0))
             {
@@ -175,6 +170,7 @@ public class FishingPole : MonoBehaviour
     }
     public Vector2 GetMousePos => cam.ScreenToWorldPoint(Input.mousePosition);
     public Vector2 PoleToMouseDir => (GetMousePos - (Vector2)_poleTip.position).normalized;
+    public Vector2 PoleToBaitDir => (bait.position - _poleTip.position).normalized;
     public float PoleToMouseDist => Vector2.Distance(GetMousePos, _poleTip.position);
     public float PoleToBaitDist => Vector2.Distance(bait.position, _poleTip.position);
     public float GetLinePulledDistance => Mathf.Min(PoleToMouseDist, playerStats.lineLength);

@@ -12,7 +12,7 @@ public class ButtonController : MonoBehaviour
     public ItemData item;
     public TMP_Text text;
     private Button _button;
-
+    private int level = 1;
     private void Awake()
     {
         _button = GetComponent<Button>();

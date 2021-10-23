@@ -19,25 +19,10 @@ public class GameManager : MonoBehaviour
         playerStats.stanleyPower = 1;
         playerStats.additionalLifetime = 0;
         playerStats.stanleyWeight = 1000;
-
-        state = State.Standby;
     }
-    public void StartShopping()
+    public void AddWeight(int weight)
     {
-        state = State.Standby;
-
-        shopCanvas.gameObject.SetActive(true);
-
-    }
-    public void EndShopping()
-    {
-        playerStats.stanleyWeight -= playerStats.selectedBait.cost;
-
-        shopCanvas.gameObject.SetActive(false);
-    }
-    public void StartGame()
-    {
-        state = State.Throwing;
+        playerStats.stanleyWeight += weight;
     }
 }
 public enum State

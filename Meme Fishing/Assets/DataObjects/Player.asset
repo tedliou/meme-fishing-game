@@ -15,7 +15,7 @@ MonoBehaviour:
   stanleyWeight: 1000
   reelPower: 0.5
   stanleyPower: 1
-  fishingRodLevel: 2
+  fishingRodLevel: 0
   lineLength: 4
   selectedBait: {fileID: 11400000, guid: e65e6377cbff22f46af8c3abcccc1068, type: 2}
   additionalLifetime: 0
