@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914120f1292ac424883854c64470f436, type: 3}
+  m_Name: Player
+  m_EditorClassIdentifier: 
+  stanleyWeight: 0
+  reelPower: 0.5
+  stanleyPower: 1
+  fishingRodLevel: 0
+  lineLength: 4
+  selectedBait: {fileID: 11400000, guid: e65e6377cbff22f46af8c3abcccc1068, type: 2}
+  additionalLifetime: 0

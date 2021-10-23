@@ -3359,6 +3359,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baits:
   - {fileID: 11400000, guid: e65e6377cbff22f46af8c3abcccc1068, type: 2}
+  - {fileID: 11400000, guid: c195f93cf8bfc3949b8c0698fff0cd96, type: 2}
+  - {fileID: 11400000, guid: c0a9e1eb8aa92ea4c96865c830deefbc, type: 2}
+  - {fileID: 11400000, guid: f5144c0a80d745642bb998a0da09da50, type: 2}
   playerStats: {fileID: 11400000, guid: e133721c6ace79f47a9eef0441aa59a7, type: 2}
   buttons:
   - {fileID: 2145533026}
