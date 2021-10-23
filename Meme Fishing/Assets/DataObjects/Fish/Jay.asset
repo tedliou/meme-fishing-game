@@ -15,4 +15,5 @@ MonoBehaviour:
   sprites:
   - {fileID: 21300000, guid: 896459cb8a295b74abf0013d228eaf74, type: 3}
   - {fileID: 21300000, guid: 4d68ac9e1e3c48b48a797a2ba8fde401, type: 3}
-  sfx: {fileID: 0}
+  sfx: {fileID: 8300000, guid: 3cae870e6a00cb7499c7eeb8e3250e68, type: 3}
+  content: 

@@ -7,4 +7,6 @@ public class FishAIProfile : ScriptableObject
 {
     public Sprite[] sprites;
     public AudioClip sfx;
+    public string content;
+    public int weight;
 }
