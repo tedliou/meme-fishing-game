@@ -17,7 +17,7 @@ public class BaitController : MonoBehaviour
             lifeTime -= Time.deltaTime;
             if (lifeTime <= 0)
             {
-                gameObject.SetActive(false);
+                Destroy(gameObject);
             }
         }
     }
@@ -28,9 +28,10 @@ public class BaitController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (lifeTime > 0)
-        {
-            if (collision.CompareTag("Water")) { _touchedWater = true; }
-        }
+        if (lifeTime > 0) { if (collision.CompareTag("Water")) { _touchedWater = true; } }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Water")) { _touchedWater = false; }
     }
 }

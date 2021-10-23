@@ -25,7 +25,7 @@ public class ButtonController : MonoBehaviour
     private void Update()
     {
         if (item == null) { Destroy(gameObject); }
-        if (item.cost > playerStats.stanleyWeight)
+        else if (item.cost > playerStats.stanleyWeight)
         {
             _button.interactable = false;
             text.color = Color.red;

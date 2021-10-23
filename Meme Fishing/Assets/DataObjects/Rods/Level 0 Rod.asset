@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cd4ef9578d795e4e99e0a121fb64ee8, type: 3}
+  m_Name: Level 0 Rod
+  m_EditorClassIdentifier: 
+  cost: 0
+  itemPrefab: {fileID: 8706390310278317068, guid: 31cf5587aac17ba41b4458da225417ba, type: 3}
+  lifeTime: 0
+  mass: 0
+  gravity: 0

@@ -3,18 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(AudioSource))]
 public class MemeShop : MonoBehaviour
 {
     public ItemData[] baits;
     public PlayerStats playerStats;
     public Button[] buttons;
     public FishingPole fishingPole;
-    private AudioSource _audioSource;
 
     private void Awake()
     {
-        _audioSource = GetComponent<AudioSource>();
         playerStats.selectedBait = baits[0];
 
         for (int i = 0; i < baits.Length; i++)
