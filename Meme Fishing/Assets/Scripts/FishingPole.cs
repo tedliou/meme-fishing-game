@@ -30,6 +30,15 @@ public class FishingPole : MonoBehaviour
 
         ResetThrowingState();
     }
+    public void SwitchBait(GameObject newBait)
+    {
+        Destroy(bait.gameObject);
+
+        bait = Instantiate(newBait).transform;
+        _baitRB = bait.GetComponent<Rigidbody2D>();
+
+        ResetThrowingState();
+    }
 
     public void ReelIn()
     {
@@ -39,7 +48,7 @@ public class FishingPole : MonoBehaviour
     public void EndFishingState()
     {
         currentState = State.Standby;
-        StartCoroutine(Delay(1f, () => currentState = State.Throwing));
+        StartCoroutine(Delay(0.5f, () => currentState = State.Throwing));
         ResetThrowingState();
 
         collectionTimer.fillAmount = 0;
@@ -47,6 +56,8 @@ public class FishingPole : MonoBehaviour
 
     private void ResetThrowingState()
     {
+        currentState = State.Throwing;
+
         bait.transform.localPosition = Vector3.zero;
         _baitRB.velocity = Vector2.zero;
         fishingPole.transform.DORotate(new Vector3(0, 0, 75), 0.2f);
@@ -79,6 +90,8 @@ public class FishingPole : MonoBehaviour
         validityZoneIndicator.SetActive(false);
 
         collectionTimer.fillAmount = 0;
+
+        bait.GetComponent<BaitController>().BaitInitialize(playerStats.lifeTime);
     }
 
 
