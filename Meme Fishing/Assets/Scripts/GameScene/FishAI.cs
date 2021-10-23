@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FishAI :MonoBehaviour {
     public FishAIProfile currentProfile;
+    public ResultCanvas resultCanvas;
 
     [Header("Component")]
     public SpriteRenderer spriteRenderer;
@@ -15,8 +16,10 @@ public class FishAI :MonoBehaviour {
     public AudioClip free;
     public AudioClip success;
 
+    public static int catchCount = 0;
+
     private Transform catchBait;
-    private bool isCatach = false;
+    public bool isCatach = false;
     private AudioSource audioSource;
     private Vector2 direction = Vector2.right;
     private float minMoveDist = 6;
@@ -90,6 +93,14 @@ public class FishAI :MonoBehaviour {
         {
             Debug.Log("Ground");
             ChangeDirection();
+        }
+    }
+
+    private void OnTriggerEnter2D (Collider2D collision) {
+        if (collision.CompareTag("Gatcha"))
+        {
+            catchCount++;
+            Resources.FindObjectsOfTypeAll<ResultCanvas>()[0].Play(currentProfile, gameObject);
         }
     }
 
