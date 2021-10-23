@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Player
   m_EditorClassIdentifier: 
   reelPower: 0.5
-  stanleyPower: 2
+  stanleyPower: 1
   lineLength: 4
-  mass: 0.12
+  mass: 0.1
   gravity: 1

@@ -10,6 +10,7 @@ public class FishingPole : MonoBehaviour
     public Transform bait;
     public LineRenderer lr;
     public Image collectionTimer;
+    public GameObject validityZoneIndicator;
 
     public PlayerStats playerStats;
 
@@ -25,8 +26,9 @@ public class FishingPole : MonoBehaviour
         cam.transform.position = new Vector3(0, 0, -10);
         cam.orthographicSize = 8;
         collectionTimer.fillAmount = 0;
+        validityZoneIndicator.SetActive(false);
 
-        StartPullingBait();
+        ResetThrowingState();
     }
 
     public void ReelIn()
@@ -38,17 +40,22 @@ public class FishingPole : MonoBehaviour
     {
         currentState = State.Standby;
         StartCoroutine(Delay(1f, () => currentState = State.Throwing));
-        bait.transform.localPosition = Vector3.zero;
-        _baitRB.velocity = Vector2.zero;
-        fishingPole.transform.DORotate(new Vector3(0, 0, 75), 0.2f);
+        ResetThrowingState();
 
         collectionTimer.fillAmount = 0;
     }
+
+    private void ResetThrowingState()
+    {
+        bait.transform.localPosition = Vector3.zero;
+        _baitRB.velocity = Vector2.zero;
+        fishingPole.transform.DORotate(new Vector3(0, 0, 75), 0.2f);
+        validityZoneIndicator.SetActive(false);
+    }
+
     public void StartPullingBait()
     {
         fishingPole.transform.DORotate(new Vector3(0, 0, 75), 0.2f);
-
-        collectionTimer.fillAmount = 0;
 
         _baitRB.mass = playerStats.mass;
         _baitRB.gravityScale = playerStats.gravity;
@@ -56,17 +63,22 @@ public class FishingPole : MonoBehaviour
     public void UpdatePullingBait()
     {
         bait.position = PoleToMouseDir * GetLinePulledDistance + (Vector2)poleTip.position;
+        validityZoneIndicator.SetActive(true);
+        collectionTimer.fillAmount = 0;
     }
 
     public void EndPullingBait()
     {
         float power = GetLinePulledDistance / playerStats.lineLength * playerStats.stanleyPower;
-        _baitRB.AddForce(-PoleToMouseDir);
-        fishingPole.transform.DORotate(new Vector3(0, 0, -45), 0.5f).SetEase(Ease.InFlash);
+        _baitRB.AddForce(-PoleToMouseDir * power, ForceMode2D.Impulse);
+        fishingPole.transform.DORotate(new Vector3(0, 0, -45), 0.75f).SetEase(Ease.InFlash);
         StartCoroutine(Delay(0.5f, () => _baitRB.AddForce(-PoleToMouseDir * power, ForceMode2D.Impulse)));
 
         currentState = State.Standby;
         StartCoroutine(Delay(2f, () => currentState = State.Fishing));
+        validityZoneIndicator.SetActive(false);
+
+        collectionTimer.fillAmount = 0;
     }
 
 
@@ -77,7 +89,8 @@ public class FishingPole : MonoBehaviour
 
         if (currentState == State.Throwing)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (GetMousePos.x > -5f) { ResetThrowingState(); }
+            else if (Input.GetMouseButtonDown(0))
             {
                 StartPullingBait();
             }
@@ -92,7 +105,7 @@ public class FishingPole : MonoBehaviour
         }
         else if (currentState == State.Fishing)
         {
-            if (PoleToBaitDist <= 6f)
+            if (PoleToBaitDist <= 5f)
             {
                 timeValidZone += Time.deltaTime;
                 collectionTimer.fillAmount = timeValidZone / 2f;
@@ -116,7 +129,6 @@ public class FishingPole : MonoBehaviour
             {
                 ReelIn();
             }
-
         }
     }
     private void LateUpdate()
@@ -124,8 +136,8 @@ public class FishingPole : MonoBehaviour
         lr.SetPosition(0, poleTip.position);
         lr.SetPosition(1, bait.position);
 
-        cam.transform.position = Vector3.Lerp((bait.position + fishingPole.transform.position) / 2 + new Vector3(0, 0, -10), cam.transform.position, 0.05f);
-        cam.orthographicSize = Mathf.Clamp((bait.position.x + Mathf.Max(-bait.position.y, 0)) / 2, 6, 20);
+        cam.transform.position = Vector3.Lerp((bait.position + fishingPole.transform.position) / 2 + new Vector3(0, 0, -10), cam.transform.position, 0.9f);
+        cam.orthographicSize = Mathf.Clamp((bait.position.x + Mathf.Max(-bait.position.y, 0)) / 1.5f, 6, 100);
     }
     private IEnumerator Delay(float time, System.Action OnComplete)
     {
