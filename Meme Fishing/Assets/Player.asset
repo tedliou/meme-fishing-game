@@ -12,8 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 914120f1292ac424883854c64470f436, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
-  reelPower: 0.5
-  stanleyPower: 2
+  reelPower: 0.2
   lineLength: 4
-  mass: 0.12
-  gravity: 1
+  stanleyPower: 20
