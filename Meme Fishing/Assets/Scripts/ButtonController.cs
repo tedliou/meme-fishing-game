@@ -16,6 +16,7 @@ public class ButtonController : MonoBehaviour
     private void Awake()
     {
         _button = GetComponent<Button>();
+        _button.onClick.AddListener(() => level++);
     }
     public void Initialize(ItemData item)
     {
@@ -25,7 +26,7 @@ public class ButtonController : MonoBehaviour
     private void Update()
     {
         if (item == null) { Destroy(gameObject); }
-        else if (item.cost > playerStats.stanleyWeight)
+        else if (item.cost * level > playerStats.stanleyWeight)
         {
             _button.interactable = false;
             text.color = Color.red;
@@ -35,5 +36,13 @@ public class ButtonController : MonoBehaviour
             _button.interactable = true;
             text.color = Color.white;
         }
+    }
+    private void OnDestroy()
+    {
+        _button.onClick.RemoveAllListeners();
+    }
+    private void OnDisable()
+    {
+        _button.onClick.RemoveAllListeners();
     }
 }

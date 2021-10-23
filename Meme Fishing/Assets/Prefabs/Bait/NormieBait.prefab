@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6393170023104153180}
   m_Layer: 0
   m_Name: NormieBait
-  m_TagString: Untagged
+  m_TagString: Bait
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -136,6 +136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeTime: 0
+  caughtFish: 0
 --- !u!114 &6393170023104153180
 MonoBehaviour:
   m_ObjectHideFlags: 0

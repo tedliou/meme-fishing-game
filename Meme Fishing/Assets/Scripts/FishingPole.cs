@@ -56,6 +56,8 @@ public class FishingPole : MonoBehaviour
         StartCoroutine(Delay(0.5f, () => GameManager.instance.state = State.Throwing));
         ResetThrowingState();
 
+        bait.GetComponent<BaitController>().OnCollect();
+
         collectionTimer.fillAmount = 0;
     }
 
@@ -91,7 +93,7 @@ public class FishingPole : MonoBehaviour
 
         collectionTimer.fillAmount = 0;
 
-        bait.GetComponent<BaitController>().BaitInitialize(playerStats.LifeTime);
+        bait.GetComponent<BaitController>().BaitInitialize(playerStats.LifeTime, this);
     }
     // Update is called once per frame
     void Update()
