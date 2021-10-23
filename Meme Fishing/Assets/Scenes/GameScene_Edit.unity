@@ -173,6 +173,7 @@ MonoBehaviour:
   bait: {fileID: 1248575342}
   lr: {fileID: 1598196718}
   playerStats: {fileID: 11400000, guid: e133721c6ace79f47a9eef0441aa59a7, type: 2}
+  currentState: 0
 --- !u!50 &145764074
 Rigidbody2D:
   serializedVersion: 4
@@ -287,6 +288,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420030}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -302,6 +304,20 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
+--- !u!114 &519420030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c2f51c9fd84f654ba61e97c72960555, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fishingPole: {fileID: 145764073}
+  fishingBait: {fileID: 1248575342}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -895,7 +911,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.01
+  m_Mass: 0.06
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 3

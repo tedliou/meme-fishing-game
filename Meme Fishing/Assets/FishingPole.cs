@@ -12,7 +12,7 @@ public class FishingPole : MonoBehaviour
     public PlayerStats playerStats;
 
     private Rigidbody2D _baitRB;
-    private State currentState;
+    public State currentState;
     private Camera cam;
     void Start()
     {
