@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Player
   m_EditorClassIdentifier: 
   reelPower: 0.2
-  tossPower: 2
+  lineLength: 4
+  stanleyPower: 20

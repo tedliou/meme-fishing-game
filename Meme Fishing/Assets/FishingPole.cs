@@ -1,4 +1,6 @@
 using UnityEngine;
+using DG.Tweening;
+using System.Collections;
 
 public class FishingPole : MonoBehaviour
 {
@@ -17,6 +19,7 @@ public class FishingPole : MonoBehaviour
         _baitRB = bait.GetComponent<Rigidbody2D>();
         currentState = State.Throwing;
         cam = Camera.main;
+        cam.orthographicSize = 8;
     }
 
     public void ReelIn()
@@ -24,19 +27,32 @@ public class FishingPole : MonoBehaviour
         if (currentState == State.Throwing) { return; }
         _baitRB.AddForce((poleTip.position - bait.position).normalized * playerStats.reelPower);
     }
+    public void EndFishingState()
+    {
+        currentState = State.Throwing;
+        bait.transform.localPosition = Vector3.zero;
+        _baitRB.velocity = Vector2.zero;
+        fishingPole.transform.DORotate(new Vector3(0, 0, 75), 0.2f);
+    }
     public void StartPullingBait()
     {
-        cam.orthographicSize = 8;
+        fishingPole.transform.DORotate(new Vector3(0, 0, 75), 0.2f);
     }
     public void UpdatePullingBait()
     {
-        float dist = Mathf.Min(PoleToMouseDist, playerStats.lineLength);
-        bait.position = PoleToMouseDir * dist + (Vector2)poleTip.position;
+        bait.position = PoleToMouseDir * GetLinePulledDistance + (Vector2)poleTip.position;
     }
+
     public void EndPullingBait()
     {
+        float power = GetLinePulledDistance / playerStats.lineLength * playerStats.stanleyPower;
+        _baitRB.AddForce(-PoleToMouseDir * power);
+        fishingPole.transform.DORotate(new Vector3(0, 0, -45), 0.5f).SetEase(Ease.InFlash);
 
+        currentState = State.Standby;
+        StartCoroutine(Delay(2f, () => currentState = State.Fishing));
     }
+
 
     // Update is called once per frame
     void Update()
@@ -58,7 +74,11 @@ public class FishingPole : MonoBehaviour
         }
         else if (currentState == State.Fishing)
         {
-            if (Input.GetMouseButtonDown(1))
+            if (PoleToBaitDist <= 1f)
+            {
+                EndFishingState();
+            }
+            if (Input.GetMouseButton(1))
             {
                 ReelIn();
             }
@@ -69,12 +89,20 @@ public class FishingPole : MonoBehaviour
         lr.SetPosition(0, poleTip.position);
         lr.SetPosition(1, bait.position);
     }
+    private IEnumerator Delay(float time, System.Action OnComplete)
+    {
+        yield return new WaitForSeconds(time);
+        OnComplete.Invoke();
+    }
     public Vector2 GetMousePos => cam.ScreenToWorldPoint(Input.mousePosition);
     public Vector2 PoleToMouseDir => (GetMousePos - (Vector2)poleTip.position).normalized;
     public float PoleToMouseDist => Vector2.Distance(GetMousePos, poleTip.position);
+    public float PoleToBaitDist => Vector2.Distance(bait.position, poleTip.position);
+    public float GetLinePulledDistance => Mathf.Min(PoleToMouseDist, playerStats.lineLength);
 }
 public enum State
 {
     Throwing,
     Fishing,
+    Standby,
 }

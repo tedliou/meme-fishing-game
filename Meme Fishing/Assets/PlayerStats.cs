@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Player Stats")]
 public class PlayerStats : ScriptableObject
 {
-    public float reelPower = 0.2f;
+    public float reelPower = 1f;
     public float lineLength = 3f;
-    public float tossPower = 10;
+    public float stanleyPower = 10;
 }
