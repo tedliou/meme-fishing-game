@@ -2,21 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FishAI : MonoBehaviour {
+public class FishAI :MonoBehaviour {
+    public FishAIProfile currentProfile;
+
+    [Header("Component")]
     public SpriteRenderer spriteRenderer;
     public SpriteRenderer fishBody;
-    public MemeType type = MemeType.Stanley;
-    public enum MemeType {
-        Stanley = 0,
-        Chang = 1,
-        Jay = 2
-    }
 
-    public Sprite[] stanley;
-    public Sprite[] chang;
-    public Sprite[] jay;
+    [Header("SFX")]
+    public AudioClip catchOne;
+    public AudioClip catchTwo;
+    public AudioClip free;
+    public AudioClip success;
 
-    private Sprite[] currentSprite;
+    private AudioSource audioSource;
     private Vector2 direction = Vector2.right;
     private float minMoveDist = 6;
     private float maxMoveDist = 20;
@@ -25,20 +24,9 @@ public class FishAI : MonoBehaviour {
     private float speed = 2;
 
     private void Start () {
+        audioSource = GetComponent<AudioSource>();
         ChangeDirection();
-        switch (type)
-        {
-            case MemeType.Stanley:
-                currentSprite = stanley;
-                break;
-            case MemeType.Chang:
-                currentSprite = chang;
-                break;
-            case MemeType.Jay:
-                currentSprite = jay;
-                break;
-        }
-        
+
         StartCoroutine(LoopSprite());
 
         fishBody.color = new Color(Random.Range(0, 1f), Random.Range(0, 1f), Random.Range(0, 1f));
@@ -48,9 +36,9 @@ public class FishAI : MonoBehaviour {
         var index = 0;
         while (true)
         {
-            spriteRenderer.sprite = currentSprite[index];
+            spriteRenderer.sprite = currentProfile.sprites[index];
             index++;
-            if (index > currentSprite.Length - 1)
+            if (index > currentProfile.sprites.Length - 1)
             {
                 index = 0;
             }
@@ -86,6 +74,7 @@ public class FishAI : MonoBehaviour {
         {
             Debug.Log("Water");
             ChangeDirectionToDown();
+            Free();
         }
     }
 
@@ -100,4 +89,26 @@ public class FishAI : MonoBehaviour {
         currentSetupDist = maxMoveDist;
         direction = new Vector2(0, -1);
     }
+
+    public void Catch () {
+        audioSource.clip = catchOne;
+        audioSource.Play();
+    }
+
+    public void CatchDouble () {
+        audioSource.clip = catchTwo;
+        audioSource.Play();
+    }
+
+    public void Free () {
+        audioSource.clip = free;
+        audioSource.Play();
+    }
+
+    public void Success () {
+        audioSource.clip = success;
+        audioSource.Play();
+    }
 }
+
+
