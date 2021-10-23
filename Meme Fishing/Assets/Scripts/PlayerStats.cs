@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerStats : ScriptableObject
 {
     [Header("Stanley")]
+    public int stanleyWeight = 0;
     public float reelPower = 1f;
     public float stanleyPower = 10;
 
@@ -14,7 +15,8 @@ public class PlayerStats : ScriptableObject
     public float lineLength = 3f;
 
     [Header("Bait")]
-    public float mass = 0.1f;
-    public float gravity = 1f;
-    public float lifeTime = 2f;
+    public ItemData selectedBait;
+    public float additionalLifetime;
+
+    public float LifeTime { get => selectedBait.lifeTime + additionalLifetime; }
 }
