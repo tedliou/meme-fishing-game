@@ -5,22 +5,21 @@ using UnityEngine.UI;
 
 public class UpgradesManager : MonoBehaviour
 {
-    public Sprite[] fishingRods;
+    public ItemData[] fishingRods;
     public PlayerStats playerStats;
     public Button[] buttons;
 
-    public SpriteRenderer fishingPoleSprite;
+    public FishingPole fishingPole;
     private void Start()
     {
-        playerStats.fishingRodLevel = 0;
-        fishingPoleSprite.sprite = fishingRods[0];
-
-
+        buttons[0].GetComponent<ButtonController>().Initialize(fishingRods[1]);
+        buttons[0].onClick.AddListener(() => UpgradeRod());
     }
     public void UpgradeRod()
     {
         playerStats.fishingRodLevel++;
-        fishingPoleSprite.sprite = fishingRods[Mathf.Min(2, playerStats.fishingRodLevel)];
+        fishingPole.SwitchRod(fishingRods[Mathf.Min(2, playerStats.fishingRodLevel)]);
+        buttons[0].GetComponent<ButtonController>().Initialize(fishingRods[Mathf.Min(2, playerStats.fishingRodLevel)]);
     }
 
     public void UpgradeStanleyPower()

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class FishingPole : MonoBehaviour
 {
     public GameObject fishingPole;
-    public Transform poleTip;
+    public GameObject fishingRod;
     public Transform bait;
     public LineRenderer lr;
     public Image collectionTimer;
@@ -15,13 +15,15 @@ public class FishingPole : MonoBehaviour
     public PlayerStats playerStats;
 
     private Rigidbody2D _baitRB;
-    public State currentState;
+    private Transform _poleTip;
+
     private Camera cam;
     private float timeValidZone;
+
     void Start()
     {
         _baitRB = bait.GetComponent<Rigidbody2D>();
-        currentState = State.Throwing;
+        _poleTip = fishingRod.transform.GetChild(0);
         cam = Camera.main;
         cam.transform.position = new Vector3(0, 0, -10);
         cam.orthographicSize = 8;
@@ -34,21 +36,26 @@ public class FishingPole : MonoBehaviour
     {
         Destroy(bait.gameObject);
 
-        bait = Instantiate(newBait.itemPrefab, poleTip).transform;
+        bait = Instantiate(newBait.itemPrefab, fishingPole.transform).transform;
         _baitRB = bait.GetComponent<Rigidbody2D>();
 
         ResetThrowingState();
     }
-
+    public void SwitchRod(ItemData newRod)
+    {
+        Destroy(fishingRod);
+        fishingRod = Instantiate(newRod.itemPrefab, fishingPole.transform);
+        _poleTip = fishingRod.transform.GetChild(0);
+    }
     public void ReelIn()
     {
-        if (currentState == State.Throwing) { return; }
-        _baitRB.AddForce((poleTip.position - bait.position).normalized * playerStats.reelPower);
+        if (GameManager.instance.state == State.Throwing) { return; }
+        _baitRB.AddForce((_poleTip.position - bait.position).normalized * playerStats.reelPower);
     }
     public void EndFishingState()
     {
-        currentState = State.Standby;
-        StartCoroutine(Delay(0.5f, () => currentState = State.Throwing));
+        GameManager.instance.state = State.Standby;
+        StartCoroutine(Delay(0.5f, () => GameManager.instance.state = State.Throwing));
         ResetThrowingState();
 
         collectionTimer.fillAmount = 0;
@@ -56,7 +63,7 @@ public class FishingPole : MonoBehaviour
 
     private void ResetThrowingState()
     {
-        currentState = State.Throwing;
+        SwitchBait(playerStats.selectedBait);
 
         bait.transform.localPosition = Vector3.zero;
         _baitRB.velocity = Vector2.zero;
@@ -73,8 +80,7 @@ public class FishingPole : MonoBehaviour
     }
     public void UpdatePullingBait()
     {
-        bait.position = PoleToMouseDir * GetLinePulledDistance + (Vector2)poleTip.position;
-        validityZoneIndicator.SetActive(true);
+        bait.position = PoleToMouseDir * GetLinePulledDistance + (Vector2)_poleTip.position;
         collectionTimer.fillAmount = 0;
     }
 
@@ -85,8 +91,8 @@ public class FishingPole : MonoBehaviour
         fishingPole.transform.DORotate(new Vector3(0, 0, -45), 0.75f).SetEase(Ease.InFlash);
         StartCoroutine(Delay(0.5f, () => _baitRB.AddForce(-PoleToMouseDir * power, ForceMode2D.Impulse)));
 
-        currentState = State.Standby;
-        StartCoroutine(Delay(2f, () => currentState = State.Fishing));
+        GameManager.instance.state = State.Standby;
+        StartCoroutine(Delay(2f, () => GameManager.instance.state = State.Fishing));
         validityZoneIndicator.SetActive(false);
 
         collectionTimer.fillAmount = 0;
@@ -98,10 +104,18 @@ public class FishingPole : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space)) { EndFishingState(); }
 
-        if (currentState == State.Throwing)
+        if (GameManager.instance.state == State.Throwing)
         {
-            if (GetMousePos.x > -5f) { ResetThrowingState(); }
-            else if (Input.GetMouseButtonDown(0))
+            if (_poleTip == null || _baitRB == null) { return; }
+
+            if (GetMousePos.x > -5f)
+            {
+                ResetThrowingState();
+                validityZoneIndicator.SetActive(true);
+            }
+            else { validityZoneIndicator.SetActive(false); }
+
+            if (Input.GetMouseButtonDown(0))
             {
                 StartPullingBait();
             }
@@ -114,8 +128,12 @@ public class FishingPole : MonoBehaviour
                 EndPullingBait();
             }
         }
-        else if (currentState == State.Fishing)
+        else if (GameManager.instance.state == State.Fishing)
         {
+            if (bait == null)
+            {
+                ResetThrowingState();
+            }
             if (PoleToBaitDist <= 5f)
             {
                 timeValidZone += Time.deltaTime;
@@ -144,11 +162,11 @@ public class FishingPole : MonoBehaviour
     }
     private void LateUpdate()
     {
-        lr.SetPosition(0, poleTip.position);
+        lr.SetPosition(0, _poleTip.position);
         lr.SetPosition(1, bait.position);
 
         cam.transform.position = Vector3.Lerp((bait.position + fishingPole.transform.position) / 2 + new Vector3(0, 0, -10), cam.transform.position, 0.9f);
-        cam.orthographicSize = Mathf.Clamp((bait.position.x + Mathf.Max(-bait.position.y, 0)) / 1.5f, 6, 100);
+        cam.orthographicSize = Mathf.Clamp((bait.position.x + Mathf.Max(-bait.position.y, 0)) / 3f, 6, 100);
     }
     private IEnumerator Delay(float time, System.Action OnComplete)
     {
@@ -156,14 +174,8 @@ public class FishingPole : MonoBehaviour
         OnComplete.Invoke();
     }
     public Vector2 GetMousePos => cam.ScreenToWorldPoint(Input.mousePosition);
-    public Vector2 PoleToMouseDir => (GetMousePos - (Vector2)poleTip.position).normalized;
-    public float PoleToMouseDist => Vector2.Distance(GetMousePos, poleTip.position);
-    public float PoleToBaitDist => Vector2.Distance(bait.position, poleTip.position);
+    public Vector2 PoleToMouseDir => (GetMousePos - (Vector2)_poleTip.position).normalized;
+    public float PoleToMouseDist => Vector2.Distance(GetMousePos, _poleTip.position);
+    public float PoleToBaitDist => Vector2.Distance(bait.position, _poleTip.position);
     public float GetLinePulledDistance => Mathf.Min(PoleToMouseDist, playerStats.lineLength);
-}
-public enum State
-{
-    Throwing,
-    Fishing,
-    Standby,
 }
