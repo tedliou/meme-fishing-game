@@ -4,18 +4,47 @@ using UnityEngine;
 
 public class FishAI : MonoBehaviour
 {
+    public MemeType type = MemeType.Stanley;
+    public enum MemeType {
+        Stanley = 0
+    }
+
+    public Sprite[] stanley;
+
+    private Sprite[] currentSprite;
     private Vector2 direction = Vector2.right;
     private float minMoveDist = 6;
     private float maxMoveDist = 20;
     private float currentSetupDist;
     private float currentDist;
     private float speed = 6;
-    private Rigidbody2D _rigidbody2D;
+    private SpriteRenderer renderer;
 
     private void Start () {
-        _rigidbody2D = GetComponent<Rigidbody2D>();
+        renderer = GetComponent<SpriteRenderer>();
         ChangeDirection();
-        //transform.Rotate(new Vector3(0, 0, Random.Range(0, 360)));
+        switch (type)
+        {
+            case MemeType.Stanley:
+                currentSprite = stanley;
+                break;
+        }
+        
+        StartCoroutine(LoopSprite());
+    }
+
+    private IEnumerator LoopSprite () {
+        var index = 0;
+        while (true)
+        {
+            renderer.sprite = currentSprite[index];
+            index++;
+            if (index > currentSprite.Length - 1)
+            {
+                index = 0;
+            }
+            yield return new WaitForSeconds(.5f);
+        }
     }
 
     private void FixedUpdate () {
@@ -31,8 +60,6 @@ public class FishAI : MonoBehaviour
         {
             transform.localScale = new Vector3(-1, 1, 1);
         }
-        //_rigidbody2D.MovePosition((Vector2)transform.position + direction * Time.fixedDeltaTime);
-        //_rigidbody2D.add
     }
 
     private void OnCollisionStay2D (Collision2D collision) {
