@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd51e682f60a5464a8732d0fe131cb5d, type: 3}
+  m_Name: AsianToneGod
+  m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 21300000, guid: a955dc2dce8ea1b4b908ba195338f18b, type: 3}
+  - {fileID: 21300000, guid: f4df7d7822371b4499134ec92f4164d1, type: 3}
+  - {fileID: 21300000, guid: 6aad02264427c874f844d82edddbb48a, type: 3}
+  sfx: {fileID: 8300000, guid: d09887ebe4d91fd4093754ab0e5203d3, type: 3}

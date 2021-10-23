@@ -15,6 +15,8 @@ public class FishAI :MonoBehaviour {
     public AudioClip free;
     public AudioClip success;
 
+    private Transform catchBait;
+    private bool isCatach = false;
     private AudioSource audioSource;
     private Vector2 direction = Vector2.right;
     private float minMoveDist = 6;
@@ -47,17 +49,39 @@ public class FishAI :MonoBehaviour {
     }
 
     private void FixedUpdate () {
-        var old = transform.position;
-        transform.localPosition += (Vector3)direction.normalized * speed * Time.fixedDeltaTime;
-        currentDist += Vector2.Distance(transform.position, old);
-        if (currentDist >= currentSetupDist) ChangeDirection();
-        if (( transform.position - old ).x > 0)
+        if (isCatach)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            transform.position = catchBait.position;
         }
         else
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            var old = transform.position;
+            transform.localPosition += (Vector3)direction.normalized * speed * Time.fixedDeltaTime;
+            currentDist += Vector2.Distance(transform.position, old);
+            if (currentDist >= currentSetupDist) ChangeDirection();
+            if (( transform.position - old ).x > 0)
+            {
+                transform.localScale = new Vector3(-1, 1, 1);
+            }
+            else
+            {
+                transform.localScale = new Vector3(1, 1, 1);
+            }
+        }
+    }
+
+    private void OnCollisionEnter2D (Collision2D collision) {
+        if (collision.gameObject.name == "Bait")
+        {
+            FollowBait(collision.transform);
+            Free();
+        }
+    }
+
+    private void OnCollisionExit2D (Collision2D collision) {
+        if (collision.gameObject.name == "Bait")
+        {
+            Free();
         }
     }
 
@@ -74,17 +98,19 @@ public class FishAI :MonoBehaviour {
         {
             Debug.Log("Water");
             ChangeDirectionToDown();
-            Free();
+            //Free();
         }
     }
 
     private void ChangeDirection () {
+        if (isCatach) return;
         currentDist = 0;
         currentSetupDist = Random.Range(minMoveDist, maxMoveDist);
         direction = new Vector2(Random.Range(-45, 45), Random.Range(-45, 45));
     }
 
     private void ChangeDirectionToDown () {
+        if (isCatach) return;
         currentDist = 0;
         currentSetupDist = maxMoveDist;
         direction = new Vector2(0, -1);
@@ -108,6 +134,15 @@ public class FishAI :MonoBehaviour {
     public void Success () {
         audioSource.clip = success;
         audioSource.Play();
+    }
+
+    public void FollowBait (Transform bait) {
+        catchBait = bait;
+        isCatach = true;
+    }
+
+    public void ReleaseFromBait () {
+        isCatach = false;
     }
 }
 
