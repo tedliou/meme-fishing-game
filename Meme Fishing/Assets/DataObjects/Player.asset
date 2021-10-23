@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Player
   m_EditorClassIdentifier: 
   stanleyWeight: 1000
-  reelPower: 0.5
+  reelPower: 1
   stanleyPower: 1
   fishingRodLevel: 0
   lineLength: 4

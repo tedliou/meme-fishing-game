@@ -56,7 +56,8 @@ public class FishingPole : MonoBehaviour
         StartCoroutine(Delay(0.5f, () => GameManager.instance.state = State.Throwing));
         ResetThrowingState();
 
-        bait.GetComponent<BaitController>().OnCollect();
+        FishAIProfile fish = bait.GetComponent<BaitController>().fish;
+        if (fish != null) { GameManager.instance.AddWeight(fish.weight); }
 
         collectionTimer.fillAmount = 0;
     }

@@ -6,17 +6,16 @@ public class BaitController : MonoBehaviour
     public float baseLifeTime = 0;
     private Rigidbody2D rb;
     private bool _touchedWater;
-    public bool caughtFish;
+    public FishAIProfile fish;
     private FishingPole _fishingPole;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         _touchedWater = false;
-        caughtFish = false;
     }
     private void Update()
     {
-        if (_touchedWater == true && !caughtFish)
+        if (_touchedWater == true && fish == null)
         {
             lifeTime -= Time.deltaTime;
             if (lifeTime <= 0)
@@ -26,13 +25,9 @@ public class BaitController : MonoBehaviour
             GameManager.instance.UpdateBaitTimer(lifeTime, baseLifeTime);
         }
     }
-    public void OnCatchFish()
+    public void OnCatchFish(FishAIProfile fish)
     {
-        caughtFish = true;
-    }
-    public void OnCollect()
-    {
-        Debug.LogError("Collecting is not implemented yet!");
+        this.fish = fish;
     }
     public void BaitInitialize(float lifeTime, FishingPole fishingPole)
     {
@@ -40,6 +35,7 @@ public class BaitController : MonoBehaviour
         baseLifeTime = lifeTime;
         _touchedWater = false;
         _fishingPole = fishingPole;
+        fish = null;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

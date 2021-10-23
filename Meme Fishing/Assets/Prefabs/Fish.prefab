@@ -394,7 +394,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -433,13 +433,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e781baa2fa9078d4abca14a89699b71d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentProfile: {fileID: 0}
+  currentProfile: {fileID: 11400000, guid: e9b18fa9b6b32c34cbe1e9babaa74821, type: 2}
+  resultCanvas: {fileID: 0}
   spriteRenderer: {fileID: 1110844963953291714}
   fishBody: {fileID: 5487748247746382037}
   catchOne: {fileID: 8300000, guid: 2548f27aaed4f7a438400bee2ba1b03a, type: 3}
   catchTwo: {fileID: 8300000, guid: 29a1a1d8980242e4cb4d8e453586b90e, type: 3}
   free: {fileID: 8300000, guid: 4626b4c8bb279d541a94e304faac267e, type: 3}
   success: {fileID: 8300000, guid: 5c89dfa6a566ee4469e18c8d199b0236, type: 3}
+  isCaught: 0
 --- !u!82 &4483409629601478520
 AudioSource:
   m_ObjectHideFlags: 0
