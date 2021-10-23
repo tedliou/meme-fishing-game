@@ -30,11 +30,11 @@ public class FishingPole : MonoBehaviour
 
         ResetThrowingState();
     }
-    public void SwitchBait(GameObject newBait)
+    public void SwitchBait(ItemData newBait)
     {
         Destroy(bait.gameObject);
 
-        bait = Instantiate(newBait).transform;
+        bait = Instantiate(newBait.itemPrefab, poleTip).transform;
         _baitRB = bait.GetComponent<Rigidbody2D>();
 
         ResetThrowingState();
@@ -68,8 +68,8 @@ public class FishingPole : MonoBehaviour
     {
         fishingPole.transform.DORotate(new Vector3(0, 0, 75), 0.2f);
 
-        _baitRB.mass = playerStats.mass;
-        _baitRB.gravityScale = playerStats.gravity;
+        _baitRB.mass = playerStats.selectedBait.mass;
+        _baitRB.gravityScale = playerStats.selectedBait.gravity;
     }
     public void UpdatePullingBait()
     {
@@ -91,10 +91,8 @@ public class FishingPole : MonoBehaviour
 
         collectionTimer.fillAmount = 0;
 
-        bait.GetComponent<BaitController>().BaitInitialize(playerStats.lifeTime);
+        bait.GetComponent<BaitController>().BaitInitialize(playerStats.LifeTime);
     }
-
-
     // Update is called once per frame
     void Update()
     {
