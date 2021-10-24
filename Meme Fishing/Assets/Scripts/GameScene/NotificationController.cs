@@ -6,7 +6,7 @@ public class NotificationController : MonoBehaviour
 {
     public GameObject notificationPrefab;
 
-    public Queue<(FishAIProfile, GameObject)> Work { get; set; } = new Queue<(FishAIProfile, GameObject)>();
+    public Queue<FishAIProfile> Work { get; set; } = new Queue<FishAIProfile>();
 
     private void Start () {
         StartCoroutine(Worker());
@@ -24,9 +24,9 @@ public class NotificationController : MonoBehaviour
             // Show Notificaiton
             var data = Work.Dequeue();
             var gameObj = Instantiate(notificationPrefab);
-            yield return gameObj.GetComponent<ResultCanvas>().Play(data.Item1, data.Item2);
+            yield return gameObj.GetComponent<ResultCanvas>().Play(data);
             Destroy(gameObj);
-            yield return new WaitForSecondsRealtime(1);
+            yield return null;
         }
     }
 }

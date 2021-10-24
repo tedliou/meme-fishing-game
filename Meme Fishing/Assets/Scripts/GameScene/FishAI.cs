@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FishAI : MonoBehaviour
 {
+    public static List<FishAI> FishList { get; set; } = new List<FishAI>();
+
     public FishAIProfile currentProfile;
     public FishAIProfile[] profileCollection;
     public ResultCanvas resultCanvas;
@@ -114,12 +116,28 @@ public class FishAI : MonoBehaviour
         if (collision.CompareTag("Gotcha"))
         {
             catchCount++;
-            Resources.FindObjectsOfTypeAll<NotificationController>()[0].Work.Enqueue((currentProfile, gameObject));
+            Resources.FindObjectsOfTypeAll<NotificationController>()[0].Work.Enqueue(currentProfile);
+            FishList.Remove(this);
+            Destroy(gameObject);
         }
         if (collision.CompareTag("Bait"))
         {
+            FishList.Add(this);
+
+            if (FishList.Count == 1)
+            {
+                Catch();
+            }
+            else if (FishList.Count == 2)
+            {
+                CatchDouble();
+            }
+            else
+            {
+                Free();
+            }
+
             FollowBait(collision.transform);
-            Free();
         }
     }
 
