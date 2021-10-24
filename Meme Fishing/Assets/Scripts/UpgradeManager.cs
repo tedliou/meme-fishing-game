@@ -31,9 +31,10 @@ public class UpgradeManager : MonoBehaviour
     }
     public void UpgradeBait()
     {
-        playerStats.selectedBait = baits[buttons[1].GetComponent<ButtonController>().level];
-        playerStats.stanleyWeight -= baits[buttons[1].GetComponent<ButtonController>().level].cost;
-        GameManager.instance.SpawnPopup(Vector3.zero, (-baits[buttons[1].GetComponent<ButtonController>().level].cost).ToString(), Color.red);
+        playerStats.baitLevel++;
+        playerStats.selectedBait = baits[playerStats.baitLevel];
+        playerStats.stanleyWeight -= baits[playerStats.baitLevel].cost;
+        GameManager.instance.SpawnPopup(Vector3.zero, (-baits[playerStats.baitLevel].cost).ToString(), Color.red);
     }
     public void UpgradeStanleyPower()
     {

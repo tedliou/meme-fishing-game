@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public Canvas shopCanvas;
     public Image baitTimerFill;
     public TMP_Text gameTimeText;
+    public TMP_Text stanleyWeightText;
     public GameObject popupPrefab;
     public static GameManager instance;
 
@@ -20,19 +21,21 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
 
-        playerStats.fishingRodLevel = 0;
+        playerStats.fishingRodLevel = 1;
+        playerStats.baitLevel = 1;
         playerStats.stanleyPower = 0.5f;
         playerStats.additionalLifetime = 0;
-        playerStats.stanleyWeight = 1000;
+        playerStats.stanleyWeight = 0;
     }
     private void Update()
     {
         _gameTime += Time.deltaTime;
         gameTimeText.text = Utils.FormatTimeToMinutes(_gameTime);
+        stanleyWeightText.text = playerStats.stanleyWeight.ToString() + "kg";
     }
     public void UpdateBaitTimer(float time, float maxTime)
     {
-        baitTimerFill.rectTransform.sizeDelta = new Vector2(Mathf.Min(maxTime * 50, 1500), 30);
+        baitTimerFill.rectTransform.sizeDelta = new Vector2(Mathf.Min(maxTime * 50, 1500), 40);
         baitTimerFill.fillAmount = time / maxTime;
     }
     public void AddWeight(int weight)

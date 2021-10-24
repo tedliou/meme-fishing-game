@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3cd4ef9578d795e4e99e0a121fb64ee8, type: 3}
-  m_Name: DecentBait
+  m_Name: time +2.5
   m_EditorClassIdentifier: 
-  cost: 100
-  itemPrefab: {fileID: 6624729060168753156, guid: 966ce23f61f623944ae52d1fee23466a, type: 3}
+  cost: 6500
+  itemPrefab: {fileID: 0}
   power: 0
-  lifeTime: 3
-  mass: 0.12
-  gravity: 1
+  lifeTime: 2
+  mass: 0
+  gravity: 0

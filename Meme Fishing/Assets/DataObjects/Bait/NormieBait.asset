@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cost: 0
   itemPrefab: {fileID: 6624729060168753156, guid: 2f7c6bf7c01c15d458ad7cbf775b23f4, type: 3}
-  lifeTime: 10
+  power: 0
+  lifeTime: 2
   mass: 0.1
   gravity: 1

@@ -21,7 +21,7 @@ public class ButtonController : MonoBehaviour
     public void Initialize(ItemData[] items)
     {
         this.items = items;
-        text.text = (items[0].cost * level).ToString();
+        text.text = (items[0].cost).ToString();
         level = 1;
     }
     private void Update()
@@ -32,7 +32,7 @@ public class ButtonController : MonoBehaviour
             text.color = Color.red;
             _button.interactable = false;
         }
-        else if (items[level].cost * level > playerStats.stanleyWeight)
+        else if (items[level].cost > playerStats.stanleyWeight)
         {
             text.text = (items[level].cost * level).ToString();
             _button.interactable = false;
@@ -40,7 +40,7 @@ public class ButtonController : MonoBehaviour
         }
         else
         {
-            text.text = (items[level + 1].cost * level).ToString();
+            text.text = (items[level].cost).ToString();
             _button.interactable = true;
             text.color = Color.white;
         }
