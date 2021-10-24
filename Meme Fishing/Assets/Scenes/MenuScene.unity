@@ -5831,7 +5831,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159bd1c9b37e2cb4c8934af8dd3098e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameScene: GameScene
+  gameScene: GameScene_1028
   fadeInCanvas: {fileID: 1365618624}
 --- !u!1 &1641777664
 GameObject:
