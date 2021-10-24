@@ -5,6 +5,7 @@ using UnityEngine;
 public class FishAI : MonoBehaviour
 {
     public FishAIProfile currentProfile;
+    public FishAIProfile[] profileCollection;
     public ResultCanvas resultCanvas;
 
     [Header("Component")]
@@ -31,6 +32,8 @@ public class FishAI : MonoBehaviour
 
     private void Start()
     {
+        currentProfile = profileCollection[Random.Range(0, profileCollection.Length)];
+
         audioSource = GetComponent<AudioSource>();
         ChangeDirection();
 
@@ -93,35 +96,34 @@ public class FishAI : MonoBehaviour
         }
         if (collision.CompareTag("Water"))
         {
-            ChangeDirectionToDown();
+            RevertDirection();
             //Free();
         }
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            ChangeDirection();
-        }
+        //if (collision.gameObject.CompareTag("Ground"))
+        //{
+        //    ChangeDirection();
+        //}
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Gatcha"))
+        Debug.Log(collision.gameObject.tag);
+        if (collision.CompareTag("Gotcha"))
         {
             catchCount++;
-            Resources.FindObjectsOfTypeAll<ResultCanvas>()[0].Play(currentProfile, gameObject);
+            Resources.FindObjectsOfTypeAll<NotificationController>()[0].Work.Enqueue((currentProfile, gameObject));
         }
         if (collision.CompareTag("Bait"))
         {
             FollowBait(collision.transform);
             Free();
         }
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            ChangeDirection();
-        }
     }
+
+    // Direction
     private void ChangeDirection()
     {
         if (isCaught) return;
@@ -129,46 +131,43 @@ public class FishAI : MonoBehaviour
         currentSetupDist = Random.Range(minMoveDist, maxMoveDist);
         direction = new Vector2(Random.Range(-45, 45), Random.Range(-45, 45));
     }
-
-    private void ChangeDirectionToDown()
+    private void RevertDirection()
     {
         if (isCaught) return;
         currentDist = 0;
-        currentSetupDist = maxMoveDist;
-        direction = new Vector2(0, -1);
+        currentSetupDist = minMoveDist;
+        direction *= -1;
     }
 
+    // SFX
     public void Catch()
     {
         audioSource.clip = catchOne;
         audioSource.Play();
     }
-
     public void CatchDouble()
     {
         audioSource.clip = catchTwo;
         audioSource.Play();
     }
-
     public void Free()
     {
         audioSource.clip = free;
         audioSource.Play();
     }
-
     public void Success()
     {
         audioSource.clip = success;
         audioSource.Play();
     }
 
+    // Bait
     public void FollowBait(Transform bait)
     {
         catchBait = bait;
         bait.GetComponent<BaitController>().OnCatchFish(currentProfile);
         isCaught = true;
     }
-
     public void ReleaseFromBait()
     {
         isCaught = false;

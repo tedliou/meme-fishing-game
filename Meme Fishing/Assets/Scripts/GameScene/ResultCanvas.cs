@@ -11,12 +11,10 @@ public class ResultCanvas : MonoBehaviour
     private FishAIProfile _profile;
     private GameObject _fishObj;
 
-    private void Start () {
-    }
-
-    public void Play (FishAIProfile profile, GameObject fishObj) {
+    public IEnumerator Play (FishAIProfile profile, GameObject fishObj) {
         _profile = profile;
-        _fishObj = fishObj;
+        //_fishObj = fishObj;
+        Destroy(fishObj);
         if (_profile.sfx != null)
         {
             audioSource.clip = _profile.sfx;
@@ -24,12 +22,12 @@ public class ResultCanvas : MonoBehaviour
         }
         gameObject.SetActive(true);
         StartCoroutine(LoopSprite());
+        yield return new WaitForSecondsRealtime(4);
+        Gotcha();
     }
 
-    public void Gatcha () {
-        Destroy(_fishObj);
+    public void Gotcha () {
         _profile = null;
-        _fishObj = null;
         StopCoroutine(LoopSprite());
         gameObject.SetActive(false);
     }
