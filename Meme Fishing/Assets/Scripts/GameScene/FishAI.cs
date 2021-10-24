@@ -44,6 +44,11 @@ public class FishAI : MonoBehaviour
         fishBody.color = new Color(Random.Range(0, 1f), Random.Range(0, 1f), Random.Range(0, 1f));
     }
 
+    private void OnDestroy () {
+
+        FishList.Remove(this);
+    }
+
     private IEnumerator LoopSprite()
     {
         var index = 0;
@@ -117,7 +122,6 @@ public class FishAI : MonoBehaviour
         {
             catchCount++;
             Resources.FindObjectsOfTypeAll<NotificationController>()[0].Work.Enqueue(currentProfile);
-            FishList.Remove(this);
             Destroy(gameObject);
         }
         if (collision.CompareTag("Bait"))
