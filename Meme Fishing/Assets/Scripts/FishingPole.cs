@@ -73,7 +73,7 @@ public class FishingPole : MonoBehaviour
         bait.GetComponent<BaitController>().ResetBait();
     }
 
-    private void ResetThrowingState()
+    public void ResetThrowingState()
     {
         bait.transform.localPosition = _poleTip.position;
         _baitRB.velocity = Vector2.zero;
@@ -82,7 +82,7 @@ public class FishingPole : MonoBehaviour
 
     public void StartPullingBait()
     {
-        fishingPole.transform.DORotate(new Vector3(0, 0, 75), 0.2f);
+        fishingPole.transform.DORotate(new Vector3(0, 0, 75), 0.5f);
 
         _baitRB.mass = playerStats.selectedBait.mass;
         _baitRB.gravityScale = playerStats.selectedBait.gravity;
@@ -110,12 +110,10 @@ public class FishingPole : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) { ResetThrowingState(); }
-
         if (GameManager.instance.state == State.Throwing)
         {
             if (_poleTip == null || _baitRB == null) { return; }
-
+            if (Input.GetKeyDown(KeyCode.Space)) { StartPullingBait(); }
             //if (GetMousePos.x > -5f)
             //{
             //    ResetThrowingState();
@@ -139,6 +137,8 @@ public class FishingPole : MonoBehaviour
         }
         else if (GameManager.instance.state == State.Fishing)
         {
+            if (Input.GetKeyDown(KeyCode.Space)) { ResetThrowingState(); }
+
             if (bait == null)
             {
                 ResetThrowingState();
