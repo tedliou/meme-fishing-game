@@ -15,7 +15,7 @@ public class BaitController : MonoBehaviour
     }
     private void Update()
     {
-        if (_touchedWater == true && fish == null)
+        if (_touchedWater == true)
         {
             lifeTime -= Time.deltaTime;
             if (lifeTime <= 0)

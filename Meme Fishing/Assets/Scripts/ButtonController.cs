@@ -13,10 +13,11 @@ public class ButtonController : MonoBehaviour
     public TMP_Text text;
     private Button _button;
     public int level = 1;
-    private void Awake()
+    private void Start()
     {
         _button = GetComponent<Button>();
         _button.onClick.AddListener(() => level++);
+        _button.onClick.AddListener(() => _button.interactable = false);
     }
     public void Initialize(ItemData[] items)
     {
@@ -34,7 +35,7 @@ public class ButtonController : MonoBehaviour
         }
         else if (items[level].cost > playerStats.stanleyWeight)
         {
-            text.text = (items[level].cost * level).ToString();
+            text.text = (items[level].cost).ToString();
             _button.interactable = false;
             text.color = Color.grey;
         }
