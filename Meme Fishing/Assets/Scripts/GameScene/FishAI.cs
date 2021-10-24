@@ -117,6 +117,10 @@ public class FishAI : MonoBehaviour
             FollowBait(collision.transform);
             Free();
         }
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            ChangeDirection();
+        }
     }
     private void ChangeDirection()
     {

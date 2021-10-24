@@ -21,7 +21,7 @@ public class ButtonController : MonoBehaviour
     public void Initialize(ItemData item)
     {
         this.item = item;
-        text.text = item.cost.ToString();
+        text.text = (item.cost * level).ToString();
     }
     private void Update()
     {
