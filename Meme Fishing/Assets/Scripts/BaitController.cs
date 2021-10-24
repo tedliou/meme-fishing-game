@@ -25,6 +25,11 @@ public class BaitController : MonoBehaviour
             GameManager.instance.UpdateBaitTimer(lifeTime, baseLifeTime);
         }
     }
+    public void ResetBait()
+    {
+        GameManager.instance.UpdateBaitTimer(0, 1);
+        fish = null;
+    }
     public void OnCatchFish(FishAIProfile fish)
     {
         this.fish = fish;

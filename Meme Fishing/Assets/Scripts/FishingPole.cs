@@ -30,9 +30,19 @@ public class FishingPole : MonoBehaviour
 
         ResetThrowingState();
     }
+    public void SwitchBait()
+    {
+        Destroy(bait.gameObject);
+
+        bait = Instantiate(playerStats.selectedBait.itemPrefab, fishingPole.transform).transform;
+        _baitRB = bait.GetComponent<Rigidbody2D>();
+
+        ResetThrowingState();
+    }
     public void SwitchBait(ItemData newBait)
     {
         Destroy(bait.gameObject);
+        playerStats.selectedBait = newBait;
 
         bait = Instantiate(newBait.itemPrefab, fishingPole.transform).transform;
         _baitRB = bait.GetComponent<Rigidbody2D>();
@@ -60,6 +70,7 @@ public class FishingPole : MonoBehaviour
         if (fish != null) { GameManager.instance.AddWeight(fish.weight); }
 
         collectionTimer.fillAmount = 0;
+        bait.GetComponent<BaitController>().ResetBait();
     }
 
     private void ResetThrowingState()

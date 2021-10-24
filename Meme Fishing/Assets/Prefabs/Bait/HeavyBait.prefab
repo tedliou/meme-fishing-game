@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6624729060168753177}
   - component: {fileID: 6393170023104153180}
   m_Layer: 0
-  m_Name: NormieBait
+  m_Name: HeavyBait
   m_TagString: Bait
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 6624729060168753156}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -54,7 +54,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bd5e3892830fc484a8bb0a9b11ec1bd4, type: 2}
+  - {fileID: 2100000, guid: 3d84faf4cf55044488f65e7049b922b6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

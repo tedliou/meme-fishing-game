@@ -9,30 +9,38 @@ using TMPro;
 public class ButtonController : MonoBehaviour
 {
     public PlayerStats playerStats;
-    public ItemData item;
+    public ItemData[] items;
     public TMP_Text text;
     private Button _button;
-    private int level = 1;
+    public int level = 1;
     private void Awake()
     {
         _button = GetComponent<Button>();
         _button.onClick.AddListener(() => level++);
     }
-    public void Initialize(ItemData item)
+    public void Initialize(ItemData[] items)
     {
-        this.item = item;
-        text.text = (item.cost * level).ToString();
+        this.items = items;
+        text.text = (items[0].cost * level).ToString();
+        level = 1;
     }
     private void Update()
     {
-        if (item == null) { Destroy(gameObject); }
-        else if (item.cost * level > playerStats.stanleyWeight)
+        if (level > items.Length)
         {
-            _button.interactable = false;
+            text.text = "MAX";
             text.color = Color.red;
+            _button.interactable = false;
+        }
+        else if (items[level].cost * level > playerStats.stanleyWeight)
+        {
+            text.text = (items[level].cost * level).ToString();
+            _button.interactable = false;
+            text.color = Color.grey;
         }
         else
         {
+            text.text = (items[level + 1].cost * level).ToString();
             _button.interactable = true;
             text.color = Color.white;
         }

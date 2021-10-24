@@ -7,8 +7,9 @@ public class ItemData : ScriptableObject
 {
     public int cost;
     public GameObject itemPrefab;
-    public float lifeTime;
 
+    public float power;
+    public float lifeTime;
     public float mass;
     public float gravity;
 }

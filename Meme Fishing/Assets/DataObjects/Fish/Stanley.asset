@@ -17,3 +17,5 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 714b72102d0d4754b8f459844c003dc9, type: 3}
   - {fileID: 21300000, guid: 2a94157b6ffb92548a53d9f8a4883dd3, type: 3}
   sfx: {fileID: 8300000, guid: 5c89dfa6a566ee4469e18c8d199b0236, type: 3}
+  content: 
+  weight: 500

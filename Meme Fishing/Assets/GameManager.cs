@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public Canvas shopCanvas;
     public Canvas fishingInformationCanvas;
     public Image baitTimerFill;
+    public GameObject popupPrefab;
     public static GameManager instance;
 
     public State state;
@@ -30,6 +31,13 @@ public class GameManager : MonoBehaviour
     public void AddWeight(int weight)
     {
         playerStats.stanleyWeight += weight;
+        SpawnPopup(Random.insideUnitCircle, "+" + weight.ToString(), Color.green);
+    }
+    public void SpawnPopup(Vector2 pos, string text, Color color)
+    {
+        Popup popup = Instantiate(popupPrefab).GetComponent<Popup>();
+        popup.Initialize(text, color);
+        popup.transform.position = pos;
     }
 }
 public enum State
