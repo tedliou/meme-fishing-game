@@ -62,6 +62,11 @@ public class FishingPole : MonoBehaviour
         if (GameManager.instance.state == State.Throwing) { return; }
         _baitRB.AddForce((_poleTip.position - bait.position).normalized * playerStats.Power);
     }
+    public void BaitExpired()
+    {
+        SwitchBait();
+        ResetThrowingState();
+    }
     public void EndFishingState()
     {
         GameManager.instance.state = State.Standby;
@@ -77,6 +82,9 @@ public class FishingPole : MonoBehaviour
     }
     public void ResetThrowingState()
     {
+        if (GameManager.instance.state == State.Standby) { return; }
+        GameManager.instance.state = State.Standby;
+        StartCoroutine(Delay(0.5f, () => GameManager.instance.state = State.Throwing));
         bait.transform.localPosition = _poleTip.position;
         _baitRB.velocity = Vector2.zero;
         fishingPole.transform.DORotate(new Vector3(0, 0, 75), 0.2f);

@@ -18,6 +18,7 @@ public class UpgradeManager : MonoBehaviour
     {
         playerStats.selectedBait = baits[0];
         playerStats.selectedRod = fishingRods[0];
+        playerStats.stanleyPower = stanleyPower[0];
 
         buttons[0].GetComponent<ButtonController>().Initialize(fishingRods);
         buttons[0].onClick.AddListener(() => UpgradeRod());
@@ -27,7 +28,9 @@ public class UpgradeManager : MonoBehaviour
 
         buttons[2].GetComponent<ButtonController>().Initialize(baitLifetime);
         buttons[2].onClick.AddListener(() => UpgradeBaitLifetime());
-        //buttons[3].GetComponent<ButtonController>().Initialize(stanleyPower);
+
+        buttons[3].GetComponent<ButtonController>().Initialize(stanleyPower);
+        buttons[3].onClick.AddListener(() => UpgradeStanleyPower());
     }
     public void UpgradeRod()
     {
@@ -42,11 +45,15 @@ public class UpgradeManager : MonoBehaviour
         playerStats.selectedBait = baits[playerStats.baitLevel];
         playerStats.stanleyWeight -= baits[playerStats.baitLevel].cost;
         GameManager.instance.SpawnPopup(Vector3.zero, (-baits[playerStats.baitLevel].cost).ToString(), Color.red);
+        fishingPole.SwitchBait();
         playerStats.baitLevel++;
     }
     public void UpgradeStanleyPower()
     {
-
+        playerStats.stanleyPower = stanleyPower[playerStats.powerLevel];
+        playerStats.stanleyWeight -= stanleyPower[playerStats.baitLevel].cost;
+        GameManager.instance.SpawnPopup(Vector3.zero, (-stanleyPower[playerStats.baitLevel].cost).ToString(), Color.red);
+        playerStats.powerLevel++;
     }
     public void UpgradeBaitLifetime()
     {

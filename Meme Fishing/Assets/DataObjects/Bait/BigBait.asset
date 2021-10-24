@@ -16,5 +16,5 @@ MonoBehaviour:
   itemPrefab: {fileID: 6624729060168753156, guid: ff17b1edcf5cc4e40855add97030728c, type: 3}
   power: 0
   lifeTime: 4
-  mass: 0.15
-  gravity: 1
+  mass: 0.2
+  gravity: 0.5

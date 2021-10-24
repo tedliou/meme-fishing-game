@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: SuperBait
   m_EditorClassIdentifier: 
   cost: 12500
-  itemPrefab: {fileID: 6624729060168753156, guid: 3f20ee46c5bf83948b1101264954598c, type: 3}
+  itemPrefab: {fileID: 6624729060168753156, guid: b19518acda58ca04392df73dc9413caf, type: 3}
   power: 0
   lifeTime: 6
-  mass: 2.5
+  mass: 1
   gravity: 0.5

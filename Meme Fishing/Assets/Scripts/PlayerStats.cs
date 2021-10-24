@@ -7,7 +7,8 @@ public class PlayerStats : ScriptableObject
 {
     [Header("Stanley")]
     public int stanleyWeight = 0;
-    public float stanleyPower = 0.5f;
+    public ItemData stanleyPower;
+    public int powerLevel = 0;
 
     [Header("Fishing Pole")]
     public ItemData selectedRod;
@@ -20,5 +21,5 @@ public class PlayerStats : ScriptableObject
     public int lifeTimeLevel = 0;
 
     public float LifeTime { get => selectedBait.lifeTime + lifeTimeLevel * 0.5f; }
-    public float Power { get => stanleyPower + selectedRod.power; }
+    public float Power { get => stanleyPower.power + selectedRod.power; }
 }

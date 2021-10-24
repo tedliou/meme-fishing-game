@@ -20,7 +20,7 @@ public class BaitController : MonoBehaviour
             lifeTime -= Time.deltaTime;
             if (lifeTime <= 0)
             {
-                _fishingPole.EndFishingState();
+                _fishingPole.BaitExpired();
             }
             GameManager.instance.UpdateBaitTimer(lifeTime, baseLifeTime);
         }

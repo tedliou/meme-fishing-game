@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 914120f1292ac424883854c64470f436, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
-  stanleyWeight: 1000
-  reelPower: 0.5
+  stanleyWeight: 500
   stanleyPower: 1
-  fishingRodLevel: 0
+  selectedRod: {fileID: 11400000, guid: f8e65c45b19c06d4a9eb9abe5576ae30, type: 2}
+  fishingRodLevel: 1
   lineLength: 3
-  selectedBait: {fileID: 11400000, guid: c195f93cf8bfc3949b8c0698fff0cd96, type: 2}
-  baitLevel: 0
-  additionalLifetime: 0
+  selectedBait: {fileID: 11400000, guid: e65e6377cbff22f46af8c3abcccc1068, type: 2}
+  baitLevel: 1
+  lifeTimeLevel: 0
