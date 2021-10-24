@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DecentBait
   m_EditorClassIdentifier: 
   cost: 100
-  itemPrefab: {fileID: 6624729060168753156, guid: 2f7c6bf7c01c15d458ad7cbf775b23f4, type: 3}
+  itemPrefab: {fileID: 6624729060168753156, guid: 966ce23f61f623944ae52d1fee23466a, type: 3}
   power: 0
   lifeTime: 3.5
   mass: 0.12
