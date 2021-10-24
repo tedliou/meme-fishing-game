@@ -55,11 +55,12 @@ public class FishingPole : MonoBehaviour
         Destroy(fishingRod);
         fishingRod = Instantiate(newRod.itemPrefab, fishingPole.transform);
         _poleTip = fishingRod.transform.GetChild(0);
+        playerStats.selectedRod = newRod;
     }
     public void ReelIn()
     {
         if (GameManager.instance.state == State.Throwing) { return; }
-        _baitRB.AddForce((_poleTip.position - bait.position).normalized * playerStats.stanleyPower);
+        _baitRB.AddForce((_poleTip.position - bait.position).normalized * playerStats.Power);
     }
     public void EndFishingState()
     {
@@ -71,16 +72,15 @@ public class FishingPole : MonoBehaviour
         if (fish != null) { GameManager.instance.AddWeight(fish.weight); }
 
         collectionTimer.fillAmount = 0;
+        SwitchBait();
         bait.GetComponent<BaitController>().ResetBait();
     }
-
     public void ResetThrowingState()
     {
         bait.transform.localPosition = _poleTip.position;
         _baitRB.velocity = Vector2.zero;
         fishingPole.transform.DORotate(new Vector3(0, 0, 75), 0.2f);
     }
-
     public void StartPullingBait()
     {
         fishingPole.transform.DORotate(new Vector3(0, 0, 75), 0.5f);
@@ -96,10 +96,10 @@ public class FishingPole : MonoBehaviour
 
     public void EndPullingBait()
     {
-        float power = GetLinePulledDistance / playerStats.lineLength * playerStats.stanleyPower;
+        float power = GetLinePulledDistance / playerStats.lineLength * playerStats.Power;
         _baitRB.AddForce(-PoleToBaitDir * power, ForceMode2D.Impulse);
         fishingPole.transform.DORotate(new Vector3(0, 0, -45), 0.6f).SetEase(Ease.InFlash);
-        StartCoroutine(Delay(0.5f, () => _baitRB.AddForce(-PoleToBaitDir * power, ForceMode2D.Impulse)));
+        StartCoroutine(Delay(0.5f, () => _baitRB.AddForce(-PoleToBaitDir * power / 2f, ForceMode2D.Impulse)));
 
         GameManager.instance.state = State.Standby;
         StartCoroutine(Delay(2f, () => GameManager.instance.state = State.Fishing));

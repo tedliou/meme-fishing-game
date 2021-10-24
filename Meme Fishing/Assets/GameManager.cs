@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
 
         playerStats.fishingRodLevel = 1;
         playerStats.baitLevel = 1;
-        playerStats.stanleyPower = 0.5f;
+        playerStats.stanleyPower = 1f;
         playerStats.lifeTimeLevel = 0;
         playerStats.stanleyWeight = 0;
     }
