@@ -34,6 +34,7 @@ public class FishAI : MonoBehaviour
 
     private void Start()
     {
+        //Application.targetFrameRate = 60;
         currentProfile = profileCollection[Random.Range(0, profileCollection.Length)];
 
         audioSource = GetComponent<AudioSource>();
