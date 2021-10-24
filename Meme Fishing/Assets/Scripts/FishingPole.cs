@@ -58,7 +58,7 @@ public class FishingPole : MonoBehaviour
     public void ReelIn()
     {
         if (GameManager.instance.state == State.Throwing) { return; }
-        _baitRB.AddForce((_poleTip.position - bait.position).normalized * playerStats.reelPower);
+        _baitRB.AddForce((_poleTip.position - bait.position).normalized * playerStats.stanleyPower);
     }
     public void EndFishingState()
     {

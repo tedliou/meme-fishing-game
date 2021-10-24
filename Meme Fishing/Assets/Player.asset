@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Player
   m_EditorClassIdentifier: 
   stanleyWeight: 1000
-  reelPower: 1
+  reelPower: 0.5
   stanleyPower: 1
   fishingRodLevel: 0
-  lineLength: 4
-  selectedBait: {fileID: 11400000, guid: e65e6377cbff22f46af8c3abcccc1068, type: 2}
+  lineLength: 3
+  selectedBait: {fileID: 11400000, guid: c195f93cf8bfc3949b8c0698fff0cd96, type: 2}
+  baitLevel: 0
   additionalLifetime: 0

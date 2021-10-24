@@ -7,8 +7,7 @@ public class PlayerStats : ScriptableObject
 {
     [Header("Stanley")]
     public int stanleyWeight = 0;
-    public float reelPower = 1f;
-    public float stanleyPower = 10;
+    public float stanleyPower = 0.5f;
 
     [Header("Fishing Pole")]
     public int fishingRodLevel = 0;
