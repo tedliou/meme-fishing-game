@@ -4293,8 +4293,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shopCanvas: {fileID: 1921897407}
-  fishingInformationCanvas: {fileID: 0}
   baitTimerFill: {fileID: 865569935}
+  gameTimeText: {fileID: 0}
   popupPrefab: {fileID: 0}
   state: 0
   playerStats: {fileID: 11400000, guid: e133721c6ace79f47a9eef0441aa59a7, type: 2}
