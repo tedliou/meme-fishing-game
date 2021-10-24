@@ -17,6 +17,7 @@ public class UpgradeManager : MonoBehaviour
     private void Awake()
     {
         playerStats.selectedBait = baits[0];
+        playerStats.selectedRod = fishingRods[0];
 
         buttons[0].GetComponent<ButtonController>().Initialize(fishingRods);
         buttons[0].onClick.AddListener(() => UpgradeRod());
