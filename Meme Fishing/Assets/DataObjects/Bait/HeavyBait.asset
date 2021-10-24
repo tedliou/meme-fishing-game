@@ -17,4 +17,4 @@ MonoBehaviour:
   power: 0
   lifeTime: 5
   mass: 0.2
-  gravity: 2
+  gravity: 0.75

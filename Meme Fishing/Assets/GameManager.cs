@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
         playerStats.fishingRodLevel = 1;
         playerStats.baitLevel = 1;
         playerStats.stanleyPower = 0.5f;
-        playerStats.additionalLifetime = 0;
+        playerStats.lifeTimeLevel = 0;
         playerStats.stanleyWeight = 0;
     }
     private void Update()

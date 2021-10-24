@@ -16,7 +16,7 @@ public class PlayerStats : ScriptableObject
     [Header("Bait")]
     public ItemData selectedBait;
     public int baitLevel = 0;
-    public float additionalLifetime;
+    public int lifeTimeLevel = 0;
 
-    public float LifeTime { get => selectedBait.lifeTime + additionalLifetime; }
+    public float LifeTime { get => selectedBait.lifeTime + lifeTimeLevel * 0.5f; }
 }

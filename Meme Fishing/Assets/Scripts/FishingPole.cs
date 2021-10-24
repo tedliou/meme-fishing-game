@@ -2,6 +2,7 @@ using UnityEngine;
 using DG.Tweening;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class FishingPole : MonoBehaviour
 {
@@ -110,6 +111,7 @@ public class FishingPole : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (EventSystem.current.IsPointerOverGameObject()) { return; }
         if (GameManager.instance.state == State.Throwing)
         {
             if (_poleTip == null || _baitRB == null) { return; }
