@@ -76,21 +76,25 @@ public class FishAI : MonoBehaviour
             }
         }
     }
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Bait"))
+    //    {
+    //        FollowBait(collision.transform);
+    //        Free();
+    //    }
+    //}
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Bait"))
+        if (collision.CompareTag("Bait"))
         {
-            FollowBait(collision.transform);
             Free();
         }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Bait"))
+        if (collision.CompareTag("Water"))
         {
-            Free();
+            ChangeDirectionToDown();
+            //Free();
         }
     }
 
@@ -101,7 +105,6 @@ public class FishAI : MonoBehaviour
             ChangeDirection();
         }
     }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Gatcha"))
@@ -109,17 +112,12 @@ public class FishAI : MonoBehaviour
             catchCount++;
             Resources.FindObjectsOfTypeAll<ResultCanvas>()[0].Play(currentProfile, gameObject);
         }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Water"))
+        if (collision.CompareTag("Bait"))
         {
-            ChangeDirectionToDown();
-            //Free();
+            FollowBait(collision.transform);
+            Free();
         }
     }
-
     private void ChangeDirection()
     {
         if (isCaught) return;
